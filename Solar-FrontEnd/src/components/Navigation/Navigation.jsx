@@ -1,4 +1,4 @@
-import s from"./Navigation.module.css";
+import s from "./Navigation.module.css";
 
 const Navigation = () => {
   return (
@@ -16,10 +16,10 @@ const Navigation = () => {
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-wind-icon lucide-wind logo"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="lucide lucide-wind-icon lucide-wind logo"
           >
             <path d="M12.8 19.6A2 2 0 1 0 14 16H2" />
             <path d="M17.5 8a2.5 2.5 0 1 1 2 4H2" />
@@ -41,10 +41,10 @@ const Navigation = () => {
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-chart-column-icon lucide-chart-column"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-chart-column-icon lucide-chart-column"
             >
               <path d="M3 3v16a2 2 0 0 0 2 2h16" />
               <path d="M18 17V9" />
@@ -60,7 +60,9 @@ const Navigation = () => {
               "w-7 h-7 rounded-full bg-blue-400 items-center justify-center flex"
             }
           >
-            <span className={"font[inter] text-sm font-bold text-amber-50"}>JD</span>
+            <span className={"font[inter] text-sm font-bold text-amber-50"}>
+              JD
+            </span>
           </div>
           <span className={"font[inter] text-sm font-semibold"}>Johne Doe</span>
         </div>
