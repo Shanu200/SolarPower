@@ -2,13 +2,13 @@ import EnergyProductionCard from "@/components/EnergyProductionCard";
 
 const SolarEnergyProduction = () => {
   const energyProductionData = [
-    { day: "Mon", date: "Sept - 26", production:"34.1" },
-    { day: "Tue", date: "Sept - 27", production:"38.3" },
-    { day: "Wed", date: "Sept - 28", production:"40.2" },
-    { day: "Thu", date: "Sept - 29", production:"36.8" },
-    { day: "Fri", date: "Sept - 30", production:"44.4" },
-    { day: "Sat", date: "Oct - 1", production:"54.9" },
-    { day: "Sun", date: "Oct - 2", production:"14.1" },
+    { day: "Mon", date: "Sept - 26", production: "34.1", hasAnomaly: false },
+    { day: "Tue", date: "Sept - 27", production: "38.3", hasAnomaly: true },
+    { day: "Wed", date: "Sept - 28", production: "40.2", hasAnomaly: false },
+    { day: "Thu", date: "Sept - 29", production: "36.8", hasAnomaly: false },
+    { day: "Fri", date: "Sept - 30", production: "44.4", hasAnomaly: false },
+    { day: "Sat", date: "Oct - 1", production: "54.9", hasAnomaly: false },
+    { day: "Sun", date: "Oct - 2", production: "14.1", hasAnomaly: false },
   ];
   return (
     <section className="px-6  py-0.5">
@@ -17,24 +17,17 @@ const SolarEnergyProduction = () => {
         <p className="text-gray-600">Dily output for tha past 7 days</p>
       </div>
       <div className=" grid grid-cols-7 ">
-        {energyProductionData.map((el)=>{
-          return(
+        {energyProductionData.map((el) => {
+          return (
             <EnergyProductionCard
-            key={el.date}
-            day={el.day}
-            date={el.date}
-            production={el.production}
+              key={el.date}
+              day={el.day}
+              date={el.date}
+              production={el.production}
+              hasAnomaly={el.hasAnomaly}
             />
-
-          )
-          
-
+          );
         })}
-          
-
-          
-        
-        
       </div>
     </section>
   );
