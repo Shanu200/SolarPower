@@ -1,5 +1,5 @@
 import EnergyProductionCards from "./EnergyProductionCards";
-import { Button } from "@/components/ui/button";
+import Tab from "./Tab";
 import { useState } from "react";
 
 const SolarEnergyProduction = () => {
@@ -40,13 +40,11 @@ const SolarEnergyProduction = () => {
       <div className="mt-3 flex items-center gap-x-4">
         {tabs.map((tab) => {
           return (
-            <Button
-              key={tab.value}
-              variant={selectedTab === tab.value ? "default" : "outline"}
-              onClick={(e) => handleTabClick(tab.value)}
-            >
-              {tab.label}
-            </Button>
+            <Tab
+            tab={tab}
+            selectedTab={selectedTab}
+            onClick={handleTabClick}
+            />
           );
         })}
       </div>
