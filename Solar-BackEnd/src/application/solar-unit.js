@@ -1,68 +1,88 @@
 import {SolarUnits} from "../infrastructure/data.js";
 import {v4 as uuidv4} from "uuid";
+import { SolarUnit } from "../infrastructure/entities/SolarUnit.js";
 
 
 export const getAllSolarUnits = async (req, res) => {
-    res.status(200).json(SolarUnits);
+    try {
+        const solarUnits = await SolarUnit.find();
+        res.status(200).json(solarUnits);
+    } catch (error) {
+        res.status(500).json({message: "Interal Server Error"});
+    }
   
 };
 
 export const createSolarUnit = async (req, res) => {
-    const {userId, serialNumber, installationDate, Capacity, status} = req.body;
+    try {
+        const { serialNumber, installationDate, capacity, status} = req.body;
 
-    const newSolarUnit={
-        _id: uuidv4(),
-        userId,
+        const newSolarUnit = {
         serialNumber,
         installationDate,
-        Capacity,
+        capacity,
         status,
     };
 
-    SolarUnits.push(newSolarUnit);
-    res.status(201).json(newSolarUnit);
+    const createdSolarUnit = await SolarUnit.create(newSolarUnit);
+    res.status(201).json(createdSolarUnit);
+
+    } catch (error) {
+        res.status(500).json({message: "Interal Server Error"});
+    }
+
+    
 };
 
-export const getAllSolarUnitsById = async (req, res) => {
-    console.log(req.params);
-
-    const {id} = req.params;
-    const solarUnit = SolarUnits.find((solarUnit) => solarUnit._id === id);
+export const getSolarUnitsById = async (req, res) => {
+    try {
+        const {id} = req.params;
+        const solarUnit = await SolarUnit.findById(id);
 
     if (!solarUnit){
         return res.status(404).json({message: "Solar unit not found"});
     }
     res.status(200).json(solarUnit);
+    } catch (error) {
+        res.status(500).json({message: "Interal Server Error"});
+    }
+    
 };
 
 export const updateSolarUnit = async (req, res) => {
 
     const {id} = req.params;
-    const {userId, serialNumber, installationDate, Capacity, status} = req.body;
-    const solarUnit = SolarUnits.find((solarUnit) => solarUnit._id === id);
+    const { serialNumber, installationDate, capacity, status} = req.body;
+    const solarUnit = await SolarUnit.findById(id);
 
         if (!solarUnit){
         return res.status(404).json({message: "Solar unit not found"});
     }
 
-    solarUnit.userId = userId;
-    solarUnit.serialNumber = serialNumber;
-    solarUnit.installationDate = installationDate;
-    solarUnit.Capacity = Capacity;
-    solarUnit.status = status;
+    const updatedSolarUnit = await SolarUnit.findByIdAndUpdate(id,{
+        serialNumber,
+        installationDate,
+        capacity,
+        status,
+    });
 
-    res.status(200).json(solarUnit);
+    res.status(200).json(updatedSolarUnit);
 
 };
 
 export const deleteSolarUnit = async (req, res) => {
-    const {id} = req.params;
-    const idx = SolarUnits.find((solarUnit) => solarUnit._id === id);
+    try {
+        const {id} = req.params;
+    const solarUnit = await SolarUnit.findById(id);
 
-    if (!idx){
+    if (!solarUnit){
         return res.status(404).json({message: "Solar unit not found"});
     }
-    SolarUnits.splice(idx, 1);
-    res.status(200).json({message: "Solar unit deleted successfully"});
-
+    
+    await SolarUnit.findByIdAndDelete(id);
+    res.status(204).send();
+    } catch (error) {
+        res.status(500).json({message: "Internal server error"});
+    }
+    
 };
