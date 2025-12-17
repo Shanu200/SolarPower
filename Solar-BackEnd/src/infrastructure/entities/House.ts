@@ -8,7 +8,7 @@ const houseSchema = new mongoose.Schema({
     solarUnitId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "SolarUnit",
-        unique: truee,
+        unique: true,
     },
 });
 

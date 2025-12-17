@@ -1,40 +1,43 @@
-import {SolarUnits} from "../infrastructure/data.js";
-import {v4 as uuidv4} from "uuid";
-import { SolarUnit } from "../infrastructure/entities/SolarUnit.js";
+import { CreateSolarUnitDto } from "../domain/dtos/solar-unit";
+import { SolarUnit } from "../infrastructure/entities/SolarUnit";
+import { Request, Response } from "express";
 
-
-export const getAllSolarUnits = async (req, res) => {
+export const getAllSolarUnits = async (req: Request, res: Response) => {
     try {
         const solarUnits = await SolarUnit.find();
         res.status(200).json(solarUnits);
     } catch (error) {
-        res.status(500).json({message: "Interal Server Error"});
+        res.status(500).json({message: "Internal Server Error"});
     }
   
 };
 
-export const createSolarUnit = async (req, res) => {
+export const createSolarUnit = async (req: Request, res: Response) => {
     try {
-        const { serialNumber, installationDate, capacity, status} = req.body;
+        const result = CreateSolarUnitDto.safeParse(req.body);
+        if(!result.success){
+            return res.status(400).json({Message: result.error.message});
+        }
 
         const newSolarUnit = {
-        serialNumber,
-        installationDate,
-        capacity,
-        status,
+        serialNumber: result.data.serialNumber,
+        installationDate: new Date(result.data.installationDate),
+        capacity: result.data.capacity,
+        status: result.data.status,
+        userId: result.data.userId,
     };
 
     const createdSolarUnit = await SolarUnit.create(newSolarUnit);
     res.status(201).json(createdSolarUnit);
 
     } catch (error) {
-        res.status(500).json({message: "Interal Server Error"});
+        res.status(500).json({message: "Internal Server Error"});
     }
 
     
 };
 
-export const getSolarUnitsById = async (req, res) => {
+export const getSolarUnitsById = async (req: Request, res: Response) => {
     try {
         const {id} = req.params;
         const solarUnit = await SolarUnit.findById(id);
@@ -44,12 +47,12 @@ export const getSolarUnitsById = async (req, res) => {
     }
     res.status(200).json(solarUnit);
     } catch (error) {
-        res.status(500).json({message: "Interal Server Error"});
+        res.status(500).json({message: "Internal Server Error"});
     }
     
 };
 
-export const updateSolarUnit = async (req, res) => {
+export const updateSolarUnit = async (req: Request, res: Response) => {
 
     const {id} = req.params;
     const { serialNumber, installationDate, capacity, status} = req.body;
@@ -70,7 +73,7 @@ export const updateSolarUnit = async (req, res) => {
 
 };
 
-export const deleteSolarUnit = async (req, res) => {
+export const deleteSolarUnit = async (req: Request, res: Response) => {
     try {
         const {id} = req.params;
     const solarUnit = await SolarUnit.findById(id);

@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
-import { SolarUnit } from "./entities/SolarUnit.js";
-import {EnergyGenerationRecord} from "./entities/EnergyGenerationRecord.js";
+import { SolarUnit } from "./entities/SolarUnit";
+import {EnergyGenerationRecord} from "./entities/EnergyGenerationRecord";
+import  { User }  from "./entities/User";
 import dotenv from "dotenv";
-import {connectDB} from "./db.js";
+import {connectDB} from "./db";
 
 dotenv.config();
 
@@ -12,8 +13,15 @@ async function seed(){
 
         await EnergyGenerationRecord.deleteMany({});
         await SolarUnit.deleteMany({});
+        await User.deleteMany({});
+
+        const user = await User.create({
+            name: "Alice Example",
+            email: "alice@example.com"
+        });
 
         const solarUnit = await SolarUnit.create({
+            userId: user._id,
             serialNumber: "Su-0001",
             installationDate: new Date("2025-09-15"),
             capacity: 5000,
@@ -33,7 +41,7 @@ async function seed(){
 
         console.log("Database seaded successfully.");
     }catch{
-        console.error("seeding error", error);
+        console.error("seeding error", Error);
     } finally{
         await mongoose.disconnect();
     }

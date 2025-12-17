@@ -1,5 +1,5 @@
 import  express  from "express";
-import { createSolarUnit, deleteSolarUnit, getAllSolarUnits, getSolarUnitsById, updateSolarUnit} from "../application/solar-unit.js";
+import { createSolarUnit, deleteSolarUnit, getAllSolarUnits, getSolarUnitsById, updateSolarUnit} from "../application/solar-unit";
 
 const SolarUnitRouter = express.Router();
 
