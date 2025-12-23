@@ -1,9 +1,10 @@
+import { Link } from "react-router";
 import s from "./Navigation.module.css";
 
 const Navigation = () => {
   return (
-    <nav className={"px-12 py-6 flex justify-between items-center"}>
-      <div className={"flex items-center gap"}>
+    <nav className={"px-12 py-6 flex justify-between   items-center"}>
+      <Link to ="/" className={"flex items-center gap-3"}>
         <div
           className={
             "w-10 h-10 rounded-full bg-lime-400 flex justify-center items-center"
@@ -27,10 +28,10 @@ const Navigation = () => {
           </svg>
         </div>
         <span className={"font[inter] text-xl font-semibold"}>Aelora</span>
-      </div>
+      </Link>
 
       <div className={"flex items-center gap-8"}>
-        <div className={"flex items-center gap-2 px-12 py-6 rounded-md"}>
+        <Link to = "/dashboard" className={"flex items-center gap-2 px-12 py-6 rounded-md"}>
           <div
             className={"w-6 h-6 rounded-full flex justify-center items-center"}
           >
@@ -53,7 +54,7 @@ const Navigation = () => {
             </svg>
           </div>
           <span className={"font[inter] text-sm font-semibold"}>Dashboard</span>
-        </div>
+        </Link>
         <div className={"flex items-center gap-2"}>
           <div
             className={
