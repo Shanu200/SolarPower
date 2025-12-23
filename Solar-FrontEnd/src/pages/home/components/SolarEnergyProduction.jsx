@@ -1,6 +1,6 @@
 import EnergyProductionCards from "./EnergyProductionCards";
 import Tab from "./Tab";
-import { useState } from "react";
+import {useSelector} from "react-redux";
 
 const SolarEnergyProduction = () => {
   const energyProductionData = [
@@ -17,11 +17,9 @@ const SolarEnergyProduction = () => {
     { label: "All", value: "all" },
     { label: "Anomaly", value: "anomaly" },
   ];
-  const handleTabClick = (value) => {
-    setSelectedTab(value);
-  };
+  
 
-  const [selectedTab, setSelectedTab] = useState(tabs[0].value);
+  const selectedTab = useSelector((state) => state.ui.selectedHomeTab);
 
   const filteredEnergyProductionData = energyProductionData.filter((el) => {
     if (selectedTab === "all") {
@@ -40,11 +38,7 @@ const SolarEnergyProduction = () => {
       <div className="mt-3 flex items-center gap-x-4">
         {tabs.map((tab) => {
           return (
-            <Tab
-            tab={tab}
-            selectedTab={selectedTab}
-            onClick={handleTabClick}
-            />
+            <Tab tab={tab} selectedTab={selectedTab} />
           );
         })}
       </div>
