@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { switchHomeTab } from "@/lib/redux/features/uiSlice";
-import { UseDispatch } from "react-redux";
 
 const Tab = (props) => {
   const dispatch = useDispatch();

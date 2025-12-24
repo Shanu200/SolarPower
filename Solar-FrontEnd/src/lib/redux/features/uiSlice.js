@@ -1,20 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
+
 const initialState = {
-    selectedHomeTab: "all",
+  selectedHomeTab: "all",
 };
 
-export const uiSlice = createSlice({
-  name: 'ui',
-  initialState: {
-  },
+const uiSlice = createSlice({
+  name: "ui",
+  initialState, // ✅ use the defined initialState
   reducers: {
     switchHomeTab: (state, action) => {
-        state,SelectedHomeTab = action.payload;
+      state.selectedHomeTab = action.payload; // ✅ correct update
     },
   },
 });
 
-// Action creators are generated for each case reducer function
-export const { switchHomeTab} = uiSlice.actions;
-
+export const { switchHomeTab } = uiSlice.actions;
 export default uiSlice.reducer;

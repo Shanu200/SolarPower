@@ -6,12 +6,13 @@ import { connectDB } from "./infrastructure/db";
 import { Request, Response, NextFunction } from "express";
 import { loggerMiddleware } from "./api/middlewares/logger-middleware";
 import { globalErrorHandler } from "./api/middlewares/global-error-handling-middleware";
+import cors from "cors";
 
 
 const server = express();
 
 server.use(express.json());
-
+server.use(cors({origin: "http://localhost:5173"}));
 server.use(loggerMiddleware);
 
 server.use("/api/solar-units", SolarUnitRouter);
