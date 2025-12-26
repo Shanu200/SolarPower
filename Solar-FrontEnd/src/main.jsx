@@ -5,6 +5,8 @@ import './index.css'
 import HomePage from './pages/home/home.page';
 import DashboardPaage from './pages/dashboard.page';
 import { RootLayout } from './layout/root.layout';
+import MainLayout from './layout/main.layout';
+import DashboardLayout from './layout/dashboard.layout';
 import store from './lib/redux/store';
 import { Provider } from "react-redux";
 
@@ -14,8 +16,12 @@ createRoot(document.getElementById("root")).render(
       <BrowserRouter>
         <Routes>
           <Route element={<RootLayout />}>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/dashboard" element={<DashboardPaage />} />
+            <Route element={<MainLayout />}>
+              <Route path="/" element={<HomePage />} />
+            </Route>
+            <Route element={<DashboardLayout />}>
+              <Route path="/dashboard" element={<DashboardPaage />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>

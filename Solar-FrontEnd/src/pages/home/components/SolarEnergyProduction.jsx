@@ -30,8 +30,8 @@ const SolarEnergyProduction = () => {
 
 
   const { data, isLoading, isError, error } =
-    useGetEnergyGenerationRecordsBySolarUnitQuery("694d7574c64d3851b7b07b94");
-
+    useGetEnergyGenerationRecordsBySolarUnitQuery({id:"694d7574c64d3851b7b07b94", groupBy:"date"});
+  
   // const handleGetdata = () => {
   //   getEnergyGenerationRecordBySolarUnit("6942501ca44f0ab126007656");
   // }
@@ -44,60 +44,19 @@ const SolarEnergyProduction = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  const formattedData = data.map((el) => {
-    return{
-      ...el,
-      timestamp: toDate(el.timestamp),
-    };
-  });
-
-  const latestGenerationrecord = formattedData[0];
-  const sevenDaysAgo = subDays(latestGenerationrecord.timestamp, 7);
-
-  const filterData = formattedData.filter((el) => {
-    return el.timestamp >= sevenDaysAgo;
-  });
-
-  const mappedData = filteredData.mao((el) => {
-    return{
-      ...el,
-      date: format(el.timestamp, "yyyy-MM-dd"),
-    };
-  });
-
-  console.log(mappedData);
-
-  const groupedData = {};
-
-  mappedData.forEach((el) => {
-    if(groupedData[el.date]) {
-    }else{
-      groupedData[el.date] = [];
-      groupedData[el.date].push(el);
-    };
-  });
-
-  const groupedDataArray =object.entries(groupedData);
-  // console.log(groupedDataArray);
-
-  const calculateTotalProduction = (data) => {
-     let total = 0;
-     data.fetch((el) => {
-      total += el.energyGeneration;
-     });
-     return total;
-  };
-
-  const newEnergyProductionData = groupedDataArray.map(([date, data]) => {
-    return{
-      day: format(toDate(date), "EEE"),
-      date: format(toDate(date), "MMM d"),
+  const newEnergyProductionData = data.slice(0,7).map((el) =>{
+    return {
+      day: format(toDate(el._date), "EEE"),
+      date: format(toDate(el._date), "MMM d"),
+      production: el.totalEnergy,
       hasAnomaly: false,
-      production: clculateTotalProduction(data),
     };
   });
+  console.log(newEnergyProductionData);
 
-  const filteredEnergyProductionData = newEnergyProductionData.filter((el) => {
+  
+
+  const filteredEnergyProductionData = energyProductionData.filter((el) => {
     if (selectedTab === "all") {
       return true;
     } else {
