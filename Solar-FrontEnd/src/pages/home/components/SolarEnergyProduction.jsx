@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { getEnergyGenerationRecordBySolarUnit } from "@/lib/api/energy-generation-record";
 import { useEffect, useState } from "react";
 import { data } from "react-router";
-import { subDays, toDate, format } from "date-fns";
+import { subDays, toDate, format, parseISO } from "date-fns";
 import { useGetEnergyGenerationRecordsBySolarUnitQuery } from "@/lib/redux/api";
 
 const SolarEnergyProduction = () => {
@@ -46,8 +46,8 @@ const SolarEnergyProduction = () => {
 
   const newEnergyProductionData = data.slice(0,7).map((el) =>{
     return {
-      day: format(toDate(el._date), "EEE"),
-      date: format(toDate(el._date), "MMM d"),
+      day: format(toDate(el._id.date), "EEE"),
+      date: format(toDate(el._id.date), "MMM d"),
       production: el.totalEnergy,
       hasAnomaly: false,
     };
@@ -59,10 +59,12 @@ const SolarEnergyProduction = () => {
   const filteredEnergyProductionData = energyProductionData.filter((el) => {
     if (selectedTab === "all") {
       return true;
-    } else {
+    } else if (selectedTab === "all") {
       return el.hasAnomaly;
     }
   });
+
+  console.log(filteredEnergyProductionData);
 
   return (
     <section className="px-6  py-0.5">
@@ -72,12 +74,11 @@ const SolarEnergyProduction = () => {
       </div>
       <div className="mt-3 flex items-center gap-x-4">
         
-        {tabs.map((tab) => (
-          <Tab 
+        {tabs.map((tab) => {
+         return <Tab 
           key={tab.value} 
-          tab={tab} s
-          electedTab={selectedTab} />
-        ))}
+          tab={tab} />
+})}
 
       </div>
       {/* <div className="mt-4">

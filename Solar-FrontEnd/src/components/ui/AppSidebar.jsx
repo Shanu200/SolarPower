@@ -27,9 +27,8 @@ const items = [
   {
     title: "Analytics",
     url: "/Dashboard/analytics",
-    icon:  ChartLine,
+    icon: ChartLine,
   },
-
 ];
 
 export function AppSidebar() {
