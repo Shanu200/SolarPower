@@ -13,6 +13,8 @@ import SignUpPage from './pages/auth/sign-up-page';
 import store from './lib/redux/store';
 import { Provider } from "react-redux";
 import { ClerkProvider } from '@clerk/clerk-react';
+import AuthorizedLayout from './layout/authorized.layout';
+import AdminPage from './pages/admin/admin.page';
 
 // Import your Publishable Key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
@@ -36,6 +38,9 @@ createRoot(document.getElementById("root")).render(
               <Route element={<ProtectedLayout />}>
                 <Route element={<DashboardLayout />}>
                   <Route path="/dashboard" element={<DashboardPaage />} />
+                </Route>
+                <Route element={<AuthorizedLayout/>}>
+                  <Route path="/admin/dashboard" element={<AdminPage/>}/>
                 </Route>
               </Route>
             </Route>
