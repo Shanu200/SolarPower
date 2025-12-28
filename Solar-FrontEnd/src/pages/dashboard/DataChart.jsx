@@ -14,9 +14,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useGetEnergyGenerationRecordsBySolarUnitQuery } from "@/lib/redux/api";
 
-const DataCard = ({ data, isLoading, isError, error }) => {
+const DataCard = ({ solarUnitId}) => {
+
   const [selectedRange, setSelectedRange] = useState("7");
+
+  const { data, isLoading, isError, error } =
+    useGetEnergyGenerationRecordsBySolarUnitQuery({
+      id: solarUnitId,
+      groupBy: "date",
+      limit: parseInt(selectedRange),
+      
+    });
 
   const handleRangeChange = (range) => {
     setSelectedRange(range);
@@ -45,8 +55,6 @@ const DataCard = ({ data, isLoading, isError, error }) => {
   };
 
   const title = "Energy Production Chart";
-
-  console.log(lastSelectedRangeDaysEnergyProduction);
 
   return (
     <Card className="rounded-md p-4">

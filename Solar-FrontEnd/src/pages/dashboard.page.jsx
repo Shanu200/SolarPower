@@ -3,13 +3,9 @@ import DataCard from "./dashboard/components/DataCard";
 import DataChart from "./dashboard/DataChart";
 
 const DashboardPage = () => {
-  const { data, isLoading, isError, error } =
-    useGetEnergyGenerationRecordsBySolarUnitQuery({
-      id: "694d7574c64d3851b7b07b94",
-      groupBy: "date",
-    });
+  
+  const solarUnitId ="694d7574c64d3851b7b07b94";
 
-  if (isError || !data) return null;
 
   return (
     <main className="mt-4">
@@ -19,19 +15,13 @@ const DashboardPage = () => {
       </p>
       <div className="mt-8">
         <DataCard
-          data={data}
-          isLoading={isLoading}
-          isError={isError}
-          error={error}
+          solarUnitId={solarUnitId}
           title="Last 7 Days Energy Production"
         />
       </div>
       <div className="mt-8">
         <DataChart
-          data={data}
-          isLoading={isLoading}
-          isError={isError}
-          error={error}
+          solarUnitId={solarUnitId}
         />
       </div>
     </main>
