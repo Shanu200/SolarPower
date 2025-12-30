@@ -8,6 +8,7 @@ import { loggerMiddleware } from "./api/middlewares/logger-middleware";
 import { globalErrorHandler } from "./api/middlewares/global-error-handling-middleware";
 import cors from "cors";
 import webhooksRouter from "./api/webhooks";
+import { clerkMiddleware } from "@clerk/express";
 
 
 const server = express();
@@ -17,6 +18,8 @@ server.use(cors({origin: "http://localhost:5173"}));
 server.use(loggerMiddleware);
 
 server.use("/api/webhooks", webhooksRouter);
+
+server.use(clerkMiddleware());
 
 server.use(express.json());
 

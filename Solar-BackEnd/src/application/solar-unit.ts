@@ -2,8 +2,11 @@ import {z} from "zod";
 import { NextFunction } from "express-serve-static-core";
 import { CreateSolarUnitDto } from "../domain/dtos/solar-unit";
 import { SolarUnit } from "../infrastructure/entities/SolarUnit";
+import {User} from "../infrastructure/entities/User";
 import { Request, Response} from "express";
 import { ValidationError, NotFoundError } from "../domain/errors/errors";
+import { getAuth } from "@clerk/express";
+
 
 export const getAllSolarUnits = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -45,7 +48,7 @@ export const createSolarUnit = async (req: Request, res: Response, next: NextFun
     
 };
 
-export const getSolarUnitsById = async (req: Request, res: Response, next: NextFunction) => {
+export const getSolarUnitById = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const {id} = req.params;
         const solarUnit = await SolarUnit.findById(id);
@@ -59,6 +62,24 @@ export const getSolarUnitsById = async (req: Request, res: Response, next: NextF
     }
     
 };
+
+export const getSolarUnitForUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const auth = getAuth(req);
+        const clerkUserId = auth.userId;
+        const user = await User.findOne({clerkUserId});
+
+    if (!user){
+       throw new ValidationError("Solar unit not found");
+    }
+    const solarUnits = await SolarUnit.find({userId: user._id});
+    res.status(200).json(solarUnits[0]);
+    } catch (error) {
+        next(error);
+    }
+    
+};
+
 
 export const updateSolarUnit = async (req: Request, res: Response, next: NextFunction) => {
 
